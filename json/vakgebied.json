@@ -1,0 +1,28 @@
+{
+    "vak":[
+        "Administratief",
+        "Beveiliging", 
+        "Bouw",
+        "Callcenter / Contactcenter",
+        "Chauffeurs",
+        "Commercieel / Verkoop",
+        "Financieel",
+        "Horeca / Catering",
+        "ICT",
+        "Industrieel / Productie",
+        "Juridisch",
+        "Logistiek",
+        "Management / Leidinggevend",
+        "Marketing & Communicatie",
+        "Medisch",
+        "Onderwijs",
+        "Overig",
+        "Personeel & Organisatie",
+        "Schoonmaak",
+        "Secretarieel",
+        "Supply chain & procurement",
+        "Techniek",
+        "Webcare",
+        "Zorg / Verpleging"
+    ]
+}
