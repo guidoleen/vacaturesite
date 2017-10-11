@@ -1,11 +1,13 @@
 <?php
 /* Include functions */
 include __DIR__ . '/inc/widget.php';
+include __DIR__ . '/inc/fnc_team.php';
 
 /* Main inits */
 define("PAGE_NR", 5);
 define("GOOGLE_KEY", 'AIzaSyCvF9vdnLTOHkKUg4VVX74zva-PT03irXo'); // Google key for differnt API's // CHANGE THIS!!!!!!
 
+// var_dump( get_intermediate_image_sizes() );
 ?>
 <?php
 /**
@@ -20,8 +22,8 @@ define("GOOGLE_KEY", 'AIzaSyCvF9vdnLTOHkKUg4VVX74zva-PT03irXo'); // Google key f
 if ( ! function_exists( 'guidoleen_setup' ) ) :
 function guidoleen_setup() {
 	load_theme_textdomain( 'guidoleen', get_template_directory() . '/languages' );
-	add_theme_support( 'post-thumbnails' );
-	set_post_thumbnail_size( 50, 50 );
+	// add_theme_support( 'post-thumbnails' );
+	// set_post_thumbnail_size( 50, 50 );
 
 	// This theme uses wp_nav_menu() in two locations.
 	register_nav_menus( array(
@@ -882,6 +884,11 @@ function strip_to_underscore($str)
 function strip_str_tax($str)
 {
 	return 'db_tax' . str_replace(' ', '', $str);
+}
+
+function strip_str_nospace($str)
+{
+	return str_replace(' ', '', $str);
 }
 
 //function for counters next to categories
