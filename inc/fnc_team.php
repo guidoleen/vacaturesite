@@ -68,7 +68,7 @@ function guidoleen_metbox_team($postval)
 					
 				?>
 					<h2 class="upload-instructions drop-instructions">Je foto plaatsen....</h2>
-					<iframe width="100%" src="<?php echo content_url() . '/themes/guidoleen/inc/fnc_team_photo.php?id=' . $postval->ID  ?>"></iframe> 
+					<iframe heigth="100%" width="100%" src="<?php echo content_url() . '/themes/guidoleen/inc/fnc_team_photo.php?id=' . $postval->ID  ?>"></iframe> 
 			</td>
 		</tr>
 	</table>

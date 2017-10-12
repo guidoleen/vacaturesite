@@ -9,7 +9,9 @@ function go_drag()
     var offY = document.getElementById("offY");
     var imgWidth = document.getElementById("imgWidth");
     var imgHeigth = document.getElementById("imgHeigth");
-    obj.style.backgroundSize = ( imgWidth.value + "px " + imgHeigth.value + "px" ) ; // w-px h-px
+    var rngPerc = document.getElementById("rngPerc");
+
+    obj.style.backgroundSize = ( imgWidth.value + "px " + imgHeigth.value + "px" ); // w-px h-px
 
     var iX = 0;
     var iPrevX = 0;
@@ -18,6 +20,7 @@ function go_drag()
     var startY = 0;
     var striX = "";
     var striY = "";
+    var iPerc = 100;
     var down = false;
     
     obj.addEventListener("mousedown", function(ev)
@@ -70,6 +73,30 @@ function go_drag()
         obj.style.backgroundPositionY = striY;
 
         offX.value = striX; // Pass through input hidden
+        offY.value = striY; // Pass through input hidden
     });
+
+    let iW = imgWidth.value;
+    let iH = imgHeigth.value;
+    var rngMove = function(e)
+    {
+        iPerc = ( e.target.value * 0.01 );
+
+        imgWidth.value = iW * iPerc;
+        imgHeigth.value = iH * iPerc;
+        obj.style.backgroundSize = ( imgWidth.value + "px " + imgHeigth.value + "px" ) ;
+    };
+   rngPerc.addEventListener("mousedown", function(e)
+   {
+        rngMove(e);
+        rngPerc.addEventListener("mousemove", function(ev)
+        {
+            rngMove(ev);
+        });
+   });
+   rngPerc.addEventListener("mouseup", function(e)
+   {
+        rngPerc.removeEventListener("mousemove", rngMove);
+   });
 }
 go_drag();
