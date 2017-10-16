@@ -1,0 +1,66 @@
+body
+{
+    font-family: "Open Sans",sans-serif;
+}
+.wp-core-ui .button, .wp-core-ui .button-secondary {
+    color: #555;
+    border-color: #ccc;
+    background: #f7f7f7;
+    -webkit-box-shadow: 0 1px 0 #ccc;
+    box-shadow: 0 1px 0 #ccc;
+    vertical-align: top;
+}
+.wp-core-ui .button-primary {
+    background: #0085ba;
+    border-color: #0073aa #006799 #006799;
+    -webkit-box-shadow: 0 1px 0 #006799;
+    box-shadow: 0 1px 0 #006799;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: 0 -1px 1px #006799,1px 0 1px #006799,0 1px 1px #006799,-1px 0 1px #006799;
+}
+.wp-core-ui .button, .wp-core-ui .button-primary, .wp-core-ui .button-secondary {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 26px;
+    height: 28px;
+    margin: 0;
+    padding: 0 10px 1px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    -webkit-appearance: none;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    white-space: nowrap;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#cont_team_show
+{
+    box-shadow: 0 0 8px 0px rgb(204, 204, 204);
+    height: 200px;
+    width: auto;
+}
+.cont_team_show
+{
+    height: 100%;
+    width: auto;
+}
+#img_team_show
+{
+    border-radius: 100px;
+    overflow: hidden;
+    box-shadow: 0 0 8px 0px rgb(204, 204, 204);
+    cursor: pointer;
+    background-position-x: 0;
+    background-repeat: no-repeat;
+    /* background-size: 100%; */
+}
+.hidethis
+{
+    visibility: hidden;
+    width: 0px;
+}

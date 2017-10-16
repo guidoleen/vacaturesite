@@ -11,7 +11,7 @@ function go_drag()
     var imgHeigth = document.getElementById("imgHeigth");
     var rngPerc = document.getElementById("rngPerc");
 
-    obj.style.backgroundSize = ( imgWidth.value + "px " + imgHeigth.value + "px" ); // w-px h-px
+    // obj.style.backgroundSize = ( imgWidth.value + "px " + imgHeigth.value + "px" ); // w-px h-px
 
     var iX = 0;
     var iPrevX = 0;
@@ -100,3 +100,12 @@ function go_drag()
    });
 }
 go_drag();
+
+// Check the file name and pass it through
+var objFile = document.getElementById("fileteam");
+var objFnameSpan = document.getElementById("fname_span");
+function fname_pass()
+{
+    objFnameSpan.innerHTML = objFile.files[0].name;
+}
+objFile.addEventListener("change", fname_pass);

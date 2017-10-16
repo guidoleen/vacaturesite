@@ -11,25 +11,7 @@
     <div id="content-team">
         <h2 class="widget-title">Ons team...</h2>
         <div class="row mrg-b-15px">
-            <div class="team-membr">
-                blaaaa
-                <img src="https://auto.ndtvimg.com/car-images/medium/mercedes-amg/glc-43-coupe/mercedes-amg-glc-43-coupe.jpg?v=5">
-            </div>
-            <div class="team-membr">
-                blaaaa
-            </div>
-            <div class="team-membr">
-                blaaaa
-            </div>
-            <div class="team-membr">
-                blaaaa
-            </div>
-            <div class="team-membr">
-                blaaaa
-            </div>
-            <div class="team-membr">
-                blaaaa
-            </div>
+            <?php echo show_team_posts($arrTeam); ?>
         </div>
     </div>
 <!-- </div> -->

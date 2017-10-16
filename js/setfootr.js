@@ -3,15 +3,15 @@ function set_footer()
 {
     var ipH = document.getElementById("page").clientHeight; // $("#page").width();
     var iwH = window.innerHeight;
-    var objF = document.getElementsByTagName("footer");
-console.log(ipH);
+    var objF = document.getElementById("main_footer"); // var objF = document.getElementsByTagName("footer");
+    
     if(ipH > iwH)
     {
-        objF[0].style = "position: relative;";
+        objF.style = "position: relative;";
     }
     else
     {
-        objF[0].style = "position: absolute;";
+        objF.style = "position: absolute;";
     }
 }
 setTimeout(function(){set_footer();}, 500);

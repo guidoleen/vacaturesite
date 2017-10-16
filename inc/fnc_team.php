@@ -61,14 +61,14 @@ function guidoleen_metbox_team($postval)
                 </td>
             </tr>
 		</tr><!-- END FISRT ROW -->
-		<tr>
+		<tr style="height: 300px;">
 			<td>
                 <b>Upload foto team member</b><br>
 				<?php 
 					
 				?>
 					<h2 class="upload-instructions drop-instructions">Je foto plaatsen....</h2>
-					<iframe height="100%" width="100%" src="<?php echo content_url() . '/themes/guidoleen/inc/fnc_team_photo.php?id=' . $postval->ID  ?>"></iframe> 
+					<iframe style="height: 300px;" width="100%" src="<?php echo content_url() . '/themes/guidoleen/inc/fnc_team_photo.php?id=' . $postval->ID  ?>"></iframe> 
 			</td>
 		</tr>
 	</table>
@@ -106,4 +106,59 @@ function metbox_team()
 	);
 }
 add_action('admin_init', 'metbox_team');
+
+// TEMPLATE > the posts_team in content template on team.php page post_team
+function show_team_posts($arr_)
+{
+	$arr_post_team = $arr_;
+
+	if($arr_ == null)
+	{
+		die("Geen team members gevonden...");
+	}
+	else
+	{
+		$iC = 0;
+		while($i<sizeof($arr_))
+		{
+			?>
+			<div onclick="window.location.href='<?php echo $arr_post_team[$iC]->guid ?>'">
+			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<header class="entry-header">
+					<?php 
+						echo sprintf( '<h2 class="vac-title">%s<a href="%s" rel="bookmark"></a></h2>', $arr_post_team[$iC]->post_title, esc_url( $arr_post_team[$iC]->guid )); 
+					?>
+				</header><!-- .entry-header -->
+
+				<div class="team-membr">
+					<?php
+						$arrPhoto = get_post_meta( absint($arr_post_team[$iC]->ID), 'photo_name', true );
+						$arrPhotoShow = "";
+						if( !file_exists( IMGDIR_TEAM . "SM" . $arrPhoto[0] ) )
+						{
+							$arrPhotoShow = "hide";
+						}
+					?>
+					<img class="team-photo-frame <?php echo $arrPhotoShow ?>" src="<?php echo IMGCONT_TEAM . 'SM' . $arrPhoto[0] ?> ">
+
+				</div><!-- .entry-content -->
+
+				<footer class="entry-footer">
+					<?php
+						
+					?>
+				</footer><!-- .entry-footer -->
+			</article><!-- #post-## -->
+			</div>
+			<?php
+			$i++;
+			$iC++;
+		}
+	}
+}
+
+// Get the arr from DB and create teamList for the page
+global $wpdb;
+$sqlq = "SELECT * FROM wp_posts WHERE wp_posts.post_type = 'post_team' AND wp_posts.post_status = 'publish'";
+$arrTeam = $wpdb->get_results($sqlq);
 ?>

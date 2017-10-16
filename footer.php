@@ -11,7 +11,7 @@
 ?>
 </div><!-- .site-content -->
 	<div id="page-back"></div>
-	<footer class="site-footer" role="contentinfo">
+	<footer id="main_footer" class="site-footer" role="contentinfo">
 		<div id="footer">
 			<div class="footer-col">
 				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">

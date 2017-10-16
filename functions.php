@@ -7,6 +7,13 @@ include __DIR__ . '/inc/fnc_team.php';
 define("PAGE_NR", 5);
 define("GOOGLE_KEY", 'AIzaSyCvF9vdnLTOHkKUg4VVX74zva-PT03irXo'); // Google key for differnt API's // CHANGE THIS!!!!!!
 
+/* Team page inits */
+define('IMGDIR', 'wp-content/uploads/team/');
+define('IMGDIR_TEAM', ABSPATH . IMGDIR);
+define('IMGCONT_TEAM', content_url() . '/uploads/team/');
+define('IMG_W', 200);
+define('IMG_H', 200);
+
 // var_dump( get_intermediate_image_sizes() );
 ?>
 <?php

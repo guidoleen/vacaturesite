@@ -1,10 +1,5 @@
 <?php
 include('../../../../wp-config.php');
-define('IMGDIR', 'wp-content/uploads/team/');
-define('IMGDIR_TEAM', ABSPATH . IMGDIR);
-define('IMGCONT_TEAM', content_url() . '/uploads/team/');
-define('IMG_W', 200);
-define('IMG_H', 200);
 
 // https://codex.wordpress.org/Class_Reference/WP_Image_Editor
 // https://bhoover.com/wp_image_editor-wordpress-image-editing-tutorial/
@@ -14,7 +9,7 @@ define('IMG_H', 200);
 
     // Get Image name from metapost
     $ImgName = get_post_meta($Id, 'photo_name', true); // Array
-  
+
     // Image info
     if( file_exists( IMGDIR_TEAM . $ImgName[0] ) )
         $arrFinfo = getimagesize( IMGDIR_TEAM . $ImgName[0] ); // File size etc.
@@ -74,40 +69,54 @@ define('IMG_H', 200);
         if( $iC == 0 || $file['type'] == "" )
         {
             echo "Geen geldige image file.....";
-            return 0;
+            header("location: " . content_url() . '/themes/guidoleen/inc/fnc_team_photo.php?id=' . $Id);
         }
 
         if( $file['tmp_name'] != null && $file['error'] == 0)
         {
+            // Create the image name
+            $arrFromPostMeta = get_post_meta($Id, 'photo_name');
+            $iAdd = 0;
+            $iAddPrev = $arrFromPostMeta[0][5];
+            if($arrFromPostMeta[0] != null)
+            {
+                $iAdd = add_up($iAddPrev);
+            }
+
+            // Construct image name
             $strImgName = strip_str_nospace( get_the_title($Id) ); // Image from title
             if( $strImgName == "" ) $strImgName = "imgteam" . $Id;
             
-                $strImgName = $strImgName . "." . $fileType;
+                $strImgNameNext = $strImgName . $iAdd . "." . $fileType;
+                $strImgNameRemv = $strImgName . $iAddPrev . "." . $fileType;
 
             // Remove previous file
-            if( file_exists(IMGDIR_TEAM . $strImgName) )
+            if( file_exists(IMGDIR_TEAM . $strImgNameRemv) )
             {
-                unlink( IMGDIR_TEAM . $strImgName );
+                unlink( IMGDIR_TEAM . $strImgNameRemv);
             }
 
             // Remove previous SM file
-            if( file_exists(IMGDIR_TEAM . "SM" . $strImgName) )
+            if( file_exists(IMGDIR_TEAM . "SM" . $strImgNameRemv) )
             {
-                unlink( IMGDIR_TEAM . "SM" . $strImgName );
+                unlink( IMGDIR_TEAM . "SM" . $strImgNameRemv );
             }
                         
-            if( move_uploaded_file($file['tmp_name'], IMGDIR_TEAM . $strImgName ) )
+            if( move_uploaded_file($file['tmp_name'], IMGDIR_TEAM . $strImgNameNext ) )
             {
                 echo "Gelukt! Jouw foto is geupload...";
             }
-            $arrFinfo = getimagesize( IMGDIR_TEAM . $strImgName ); // File size etc.
+            $arrFinfo = getimagesize( IMGDIR_TEAM . $strImgNameNext ); // File size etc.
 
              // Do the DB process...
-            $arrImgName = Array();
-            $iAdd = add_up($arrFinfo[5]);
-            array_push( $arrImgName, $strImgName, 0, 0, $arrFinfo[0], $arrFinfo[1], $iAdd ); // Aditional push array
-
+            $arrImgName = Array(); // Create empty array for push
+            
+            // Save to the DB
+            array_push( $arrImgName, $strImgNameNext, 0, 0, $arrFinfo[0], $arrFinfo[1], $iAdd ); // Aditional push array
             update_post_meta($Id, 'photo_name', $arrImgName);
+
+            // Update the post.php for recognite the new file
+            header("location: " . content_url() . '/themes/guidoleen/inc/fnc_team_photo.php?id=' . $Id); // admin_url() . "post.php?post=44&action=edit");
         }
     }
 
@@ -140,6 +149,9 @@ function photo_crop($id, $offX, $offY, $imgWidth, $imgHeigth)
         update_post_meta($id, 'photo_name', $arrImgName);
 
         echo "Jouw foto is klaar voor gebruik....";
+
+         // Update the post.php for recognite the new file
+         header("location: " . content_url() . '/themes/guidoleen/inc/fnc_team_photo.php?id=' . $id);
         // $img ->stream();
     }
     catch(Exeption $e)
@@ -151,10 +163,8 @@ function photo_crop($id, $offX, $offY, $imgWidth, $imgHeigth)
 // function adder
 function add_up($iNmr)
 {
-    if( $iNmr < 10)
-        return $iNmr + 1;
-    else
-        return 0;
+    if($iNmr == 0) return 1;
+    if($iNmr == 1) return 0;
 }
 
 // Posting the avatar
@@ -168,71 +178,79 @@ if( isset($_POST['savecrop']) )
     photo_crop($Id, $offX, $offY, $imgWidth, $imgHeigth); // Call the function
 }
 
+// Reset the Orginal image size
+function reset_team_img($arrFinfo, $id)
+{
+    // Get the info...
+    $arrFile = get_post_meta($id, 'photo_name', true);
+
+    // Do the DB process...
+    $arrImgName = Array();
+        array_push($arrImgName, $arrFile[0], 0, 0, $arrFinfo[0], $arrFinfo[1], $arrFile[5]);
+    update_post_meta($id, 'photo_name', $arrImgName);
+
+
+    // Update the post.php for recognite the new file
+    header("location: " . content_url() . '/themes/guidoleen/inc/fnc_team_photo.php?id=' . $id);
+}
+
+// Resetting the img
+if( isset($_POST['reset_team_img']) )
+{
+    reset_team_img($arrFinfo, $Id);
+}
 ?>
 <html>
     <head>
-        <link rel="stylesheet" href="<?php echo admin_url() . 'css/wp-admin.min.css' ?>" ></link>
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+
+        <link rel="stylesheet" href="<?php echo get_template_directory_uri() . '/css/admin/guidoleen_admin.css' ?>" ></link>
     </head>
         <body>
-        <style>
-            #cont_team_show
-            {
-                border: solid #005500 1px;
-                float:left;
-            }
-            #img_team_show
-            {
-                border-radius: 100px;
-                overflow: hidden;
-                float:left;
-                border: 1px solid #005500;
-                cursor: pointer;
-                background-position-x: 0;
-                background-repeat: no-repeat;
-                /* background-size: 100%; */
-            }
-        </style>
-        <form action="<?php echo 'fnc_team_photo.php?id=' . $Id ?>"  method="post" enctype="multipart/form-data">
-            <input type="file" name="fileteam" id="fileteam" class="button insert-media add_media" />
-            <input type="submit" name="subfileteam" id="subfileteam" value="Bewaar foto..." class="button insert-media add_media" />
-        </form>
+            <div class="wp-core-ui">
+                <form action="<?php echo 'fnc_team_photo.php?id=' . $Id ?>"  method="post" enctype="multipart/form-data">
 
-        <!-- <div id="cont_team_show">
-            <img src="<?php echo $ImgTag ?>"> />
-        </div> -->
-        <div id="img_team_show" 
-            style="background-image: url( <?php echo $ImgTag ?> ); 
-            width:<?php echo IMG_W ?>; 
-            height:<?php echo IMG_H ?>;
-            background-size: <?php echo $ImgName[3] . "px " . $ImgName[4] . "px" ?>;
-            background-position-x: <?php echo $ImgName[1] ?>;
-            background-position-y: <?php echo $ImgName[2] ?>;
-        ">
-        </div>
+                    <label for="fileteam">
+                        <span class="button button-primary button-large" id="fname_span">Upload jouw foto hier...
+                            <?php echo $_FILES['fileteam']['name']; ?>
+                        </span>
+                    </label>
+                    <input type="file" name="fileteam" id="fileteam" class="hidethis" />
+                    <input type="submit" name="subfileteam" id="subfileteam" value="Bewaar foto..." class="button button-primary button-large" />
+                </form>
 
-        <input type="range" id="rngPerc" min="0" max="100" step="1" list="tickmarks" start="100" />
-            <datalist id="tickmarks">
-            <option value="0" label="0%">
-            <option value="10">
-            <option value="20">
-            <option value="30">
-            <option value="40">
-            <option value="50" label="50%">
-            <option value="60">
-            <option value="70">
-            <option value="80">
-            <option value="90">
-            <option value="100" label="100%">
-            </datalist>
-        
-        <form action="<?php echo 'fnc_team_photo.php?id=' . $Id ?>"  method="post" enctype="multipart/form-data">
-            <input type="submit" id="savecrop" name="savecrop"  value="Bewaar Avatar" class="button button-primary button-large"/>
-            <input id="offX" name="offX" type="hidden" value="0" />
-            <input id="offY" name="offY" type="hidden" value="0" />
-            <input id="imgWidth" name="imgWidth" type="hidden" value="<?php echo $arrFinfo[0] ?>" />
-            <input id="imgHeigth" name="imgHeigth" type="hidden" value="<?php echo $arrFinfo[1] ?>" />
-        </form>
-    
+                <span class="img_team_descr">Jouw grote foto...</span>
+                <div id="cont_team_show">
+                    <img class="cont_team_show" src="<?php echo $ImgTag ?>">
+                </div>
+                
+                <div id="img_team_show" 
+                    style="background-image: url( <?php echo $ImgTag ?> ); 
+                    width:<?php echo IMG_W ?>; 
+                    height:<?php echo IMG_H ?>;
+                    background-size: <?php echo $ImgName[3] . "px " . $ImgName[4] . "px" ?>;
+                    background-position-x: <?php echo $ImgName[1] ?>;
+                    background-position-y: <?php echo $ImgName[2] ?>;
+                ">
+                </div>
+                <span class="img_team_descr">Jouw Avatar...</span>
+
+                <input type="range" id="rngPerc" min="0" max="100" step="1" value="100" />
+                
+                <form action="<?php echo 'fnc_team_photo.php?id=' . $Id ?>"  method="post" enctype="multipart/form-data">
+                    <input type="submit" id="savecrop" name="savecrop"  value="Bewaar Avatar" class="button button-primary button-large"/>
+                    <input id="offX" name="offX" type="hidden" value="0" />
+                    <input id="offY" name="offY" type="hidden" value="0" />
+                    <input id="imgWidth" name="imgWidth" type="hidden" value="<?php echo $ImgName[3] ?>" />
+                    <input id="imgHeigth" name="imgHeigth" type="hidden" value="<?php echo $ImgName[4] ?>" />
+                </form>
+
+                <form action="<?php echo 'fnc_team_photo.php?id=' . $Id ?>"  method="post" enctype="multipart/form-data">
+                    <input type="submit" id="reset_team_img" name="reset_team_img"  value="Reset Avatar" class="button button-primary button-large"/>
+                </form>
+            </div>
         <script src="<?php echo get_template_directory_uri() . '/js/teamimg.js' ?>"></script>
     </body>
 </html>
