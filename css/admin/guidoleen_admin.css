@@ -2,15 +2,14 @@ body
 {
     font-family: "Open Sans",sans-serif;
 }
-.wp-core-ui .button, .wp-core-ui .button-secondary {
-    color: #555;
-    border-color: #ccc;
-    background: #f7f7f7;
-    -webkit-box-shadow: 0 1px 0 #ccc;
-    box-shadow: 0 1px 0 #ccc;
-    vertical-align: top;
+html, body
+{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
-.wp-core-ui .button-primary {
+.wp-core-ui .button-primary 
+{
     background: #0085ba;
     border-color: #0073aa #006799 #006799;
     -webkit-box-shadow: 0 1px 0 #006799;
@@ -19,35 +18,54 @@ body
     text-decoration: none;
     text-shadow: 0 -1px 1px #006799,1px 0 1px #006799,0 1px 1px #006799,-1px 0 1px #006799;
 }
-.wp-core-ui .button, .wp-core-ui .button-primary, .wp-core-ui .button-secondary {
-    display: inline-block;
+.wp-core-ui .button-green
+{
+    background: #009991;
+}
+.wp-core-ui .button
+{
+    /* display: inline-block; */
     text-decoration: none;
-    font-size: 13px;
+    font-size: 15px;
     line-height: 26px;
-    height: 28px;
     margin: 0;
-    padding: 0 10px 1px;
+    width: 200px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     cursor: pointer;
     border-width: 1px;
     border-style: solid;
     -webkit-appearance: none;
     -webkit-border-radius: 3px;
     border-radius: 3px;
-    white-space: nowrap;
+    /* white-space: nowrap;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    box-sizing: border-box; */
+}
+.wp-core-ui .button-xtra
+{
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.wp-core-ui .button:hover, .button-primary:hover
+{
+    opacity: 0.6;
 }
 #cont_team_show
 {
     box-shadow: 0 0 8px 0px rgb(204, 204, 204);
-    height: 200px;
-    width: auto;
+    left: 0px;
+    top: 0px;
+    position: absolute;
 }
 .cont_team_show
 {
-    height: 100%;
+    height: 100px;
     width: auto;
+    left: 0px;
+    position: absolute;
+    top: 0px;
 }
 #img_team_show
 {
@@ -57,10 +75,91 @@ body
     cursor: pointer;
     background-position-x: 0;
     background-repeat: no-repeat;
+    margin: 0 auto;
     /* background-size: 100%; */
 }
 .hidethis
 {
     visibility: hidden;
     width: 0px;
+}
+.img-team-container
+{
+    width: 100%;
+}
+.img-team-wrapper
+{
+    width: 320px;
+    margin: 0 auto;
+    text-align: center;
+}
+.hide
+{
+    display: none;
+}
+.show
+{
+    display: inline-block;
+}
+#rngPerc
+{
+    width: 100%;
+    height: 30px;
+    margin: 0;
+}
+
+/* ADMIN PART */
+#container_iframe_img
+{
+    width: 0;
+    height: 500px;
+    display: inline-block;
+    z-index: 999;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    transition: width 0.5s;
+    overflow: hidden;
+    /* display: none; */
+}
+#wrapper_iframe_img
+{
+    z-index: 998;
+    position: relative;
+    height: 500px;
+}
+#back_iframe_img
+{
+    width: 100%;
+    height: 500px;
+    display: inline-block;
+    z-index: 997;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: #000;
+    opacity: 0.3;
+}
+#iframe_img
+{
+    height: 500px;
+    overflow: hidden;
+}
+.shut 
+{
+    position: absolute;
+    margin-right: -25px;
+    background: #fff;
+    cursor: pointer;
+    box-sizing: inherit;
+    font-size: 20px;
+    width: 25px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    text-align: center;
+    right: 30px;
+}
+.shut:hover
+{
+    opacity: 0.5
 }

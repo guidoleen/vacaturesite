@@ -41,6 +41,7 @@ add_action('init', 'guidoleen_posttype_team');
 function guidoleen_metbox_team($postval)
 {
 ?>
+	<link rel="stylesheet" href="<?php echo get_template_directory_uri() . '/css/admin/guidoleen_admin.css' ?>" ></link>
 	<table class="admin_tble" style="width: 100%;">
             <tr>
                 <td style="vertical-align: top; width: 30%;">
@@ -67,11 +68,19 @@ function guidoleen_metbox_team($postval)
 				<?php 
 					
 				?>
-					<h2 class="upload-instructions drop-instructions">Je foto plaatsen....</h2>
-					<iframe style="height: 300px;" width="100%" src="<?php echo content_url() . '/themes/guidoleen/inc/fnc_team_photo.php?id=' . $postval->ID  ?>"></iframe> 
+					<h2 class="upload-instructions drop-instructions" onclick="openiframe();">Je foto plaatsen....</h2>
 			</td>
 		</tr>
 	</table>
+	<div id="container_iframe_img">
+		<div id="wrapper_iframe_img">
+			<span id="shutiframe" class="shut" onclick="shutiframe();">×</span>
+			<iframe id="iframe_img" width="100%" src="<?php echo content_url() . '/themes/guidoleen/inc/fnc_team_photo.php?id=' . $postval->ID  ?>"></iframe> 
+		</div>
+		<div id="back_iframe_img">
+		</div>
+	</div>
+	<script src="<?php echo get_template_directory_uri() . '/js/teamimg.js' ?>"></script>
 <?php
 }
 

@@ -103,9 +103,97 @@ go_drag();
 
 // Check the file name and pass it through
 var objFile = document.getElementById("fileteam");
+var objFileSubm = document.getElementById("subfileteam");
 var objFnameSpan = document.getElementById("fname_span");
 function fname_pass()
 {
     objFnameSpan.innerHTML = objFile.files[0].name;
+    objFileSubm.setAttribute("class", "button button-primary show");
 }
 objFile.addEventListener("change", fname_pass);
+
+// After saving the file
+var objPhoto = document.getElementById("img_team_show");
+var objSave = document.getElementById("img_team_save");
+var objAvatar = document.getElementById("img_team_avatar");
+function fsave()
+{
+    if(objPhoto.style.backgroundImage != "") // if photo exists
+    {
+        objFileSubm.setAttribute("class", "button button-primary hide"); // hide the save again
+        objSave.setAttribute("class", "show"); // Hide the div
+        objAvatar.setAttribute("class", "show");
+        
+        objFnameSpan.setAttribute("class", "button button-primary button-green show"); // The upload button colorchange
+        objFnameSpan.innerHTML = "Upload een andere foto..."; // The upload button
+
+            objFile.addEventListener("change", avatar_hide);
+    }
+}
+window.addEventListener("load", fsave);
+
+function avatar_hide()
+{
+    objAvatar.setAttribute("class", "hide");
+}
+
+// * ADMIN PART * //
+function shutiframe()
+{
+    var objContainIframe = document.getElementById("container_iframe_img");
+    objContainIframe.style.display = "none";
+}
+function openiframe()
+{
+    var objContainIframe = document.getElementById("container_iframe_img");
+    objContainIframe.style.width = "100%";
+    objContainIframe.style.display = "block";
+}
+
+
+// TESTED //
+// get uri params
+// function getQueryParams(qs) 
+// {
+//     arrQ = qs.split("?");
+//     if(arrQ == undefined) return "";
+
+//     var arrPrms = arrQ[1]; // decodeURIComponent(arrQ[1]);
+//     var strObj = {};
+//     var iC = 0;
+//     let val = "";
+//     let key = "";
+//     let strFLag = "";
+
+//     for(let i = 0, n = arrPrms.length; i<n; i++)
+//     {
+//         if( arrPrms[i] == "=" )
+//         {
+//             i = i+1;
+//             iC = 1;
+//             (iC == 0) ? key = strFLag : val = strFLag;
+//         }
+        
+//         if( arrPrms[i] == "&")
+//         {
+//             i = i+1;
+//             iC = 0;
+//             strObj.push( relateKeyVal(key, val) );
+
+//             strFLag = "";
+//             console.log(key + " " + val);
+//         }
+//         console.log(arrPrms[i]);
+//         strFLag += arrPrms[i];
+//     }
+//     return strObj;
+// }
+
+// // Put together key val to the object
+// function relateKeyVal(key, val)
+// {
+//     return eval(key) + ": " + val;
+// }
+
+// var query = getQueryParams(window.location.href);
+// console.log(query);
