@@ -108,7 +108,7 @@ var objFnameSpan = document.getElementById("fname_span");
 function fname_pass()
 {
     objFnameSpan.innerHTML = objFile.files[0].name;
-    objFileSubm.setAttribute("class", "button button-primary show");
+    objFileSubm.setAttribute("class", "button2 button2-primary show");
 }
 objFile.addEventListener("change", fname_pass);
 
@@ -116,15 +116,22 @@ objFile.addEventListener("change", fname_pass);
 var objPhoto = document.getElementById("img_team_show");
 var objSave = document.getElementById("img_team_save");
 var objAvatar = document.getElementById("img_team_avatar");
+var objSaveCrop = document.getElementById("savecrop");
 function fsave()
 {
-    if(objPhoto.style.backgroundImage != "") // if photo exists
+    // Init
+    objAvatar.setAttribute("class", "hide"); // Hide first time Avatar part
+    
+    // Check if photo is there...
+    var url = objPhoto.style.backgroundImage;
+
+    if(url.substring(4, url.length-1) !== "\"\"") // if photo exists
     {
-        objFileSubm.setAttribute("class", "button button-primary hide"); // hide the save again
+        objFileSubm.setAttribute("class", "button2 button2-primary hide"); // hide the save again
         objSave.setAttribute("class", "show"); // Hide the div
-        objAvatar.setAttribute("class", "show");
+        objAvatar.setAttribute("class", "show"); // Hide first time Avatar part
         
-        objFnameSpan.setAttribute("class", "button button-primary button-green show"); // The upload button colorchange
+        objFnameSpan.setAttribute("class", "button2 button2-primary button2-green show"); // The upload button colorchange
         objFnameSpan.innerHTML = "Upload een andere foto..."; // The upload button
 
             objFile.addEventListener("change", avatar_hide);
@@ -132,9 +139,19 @@ function fsave()
 }
 window.addEventListener("load", fsave);
 
+objSaveCrop.addEventListener("click", function(){
+    document.getElementById("tooltip_team").setAttribute("class", "hide"); // Hide the tooltip when savecrop
+})
+
 function avatar_hide()
 {
     objAvatar.setAttribute("class", "hide");
+}
+// Tooltipclose
+function shuttip(obj)
+{
+    let objDiv = document.getElementById(obj);
+    objDiv.setAttribute("class", "hide");
 }
 
 // * ADMIN PART * //
@@ -150,50 +167,47 @@ function openiframe()
     objContainIframe.style.display = "block";
 }
 
+// * Maybe Use this * //
+function getQueryParams(qs) 
+{
+    arrQ = qs.split("?");
+    if(arrQ == undefined) return "";
 
-// TESTED //
-// get uri params
-// function getQueryParams(qs) 
-// {
-//     arrQ = qs.split("?");
-//     if(arrQ == undefined) return "";
+    var arrPrms = arrQ[1]; // decodeURIComponent(arrQ[1]);
+    var strObj = {};
+    var iC = 0;
+    let val = "";
+    let key = "";
 
-//     var arrPrms = arrQ[1]; // decodeURIComponent(arrQ[1]);
-//     var strObj = {};
-//     var iC = 0;
-//     let val = "";
-//     let key = "";
-//     let strFLag = "";
+    for(let i = 0, n = arrPrms.length; i<n; i++)
+    {
+        if( arrPrms[i] == "=" )
+        {
+            i = i+1;
+            iC = 1;
+        }
 
-//     for(let i = 0, n = arrPrms.length; i<n; i++)
-//     {
-//         if( arrPrms[i] == "=" )
-//         {
-//             i = i+1;
-//             iC = 1;
-//             (iC == 0) ? key = strFLag : val = strFLag;
-//         }
-        
-//         if( arrPrms[i] == "&")
-//         {
-//             i = i+1;
-//             iC = 0;
-//             strObj.push( relateKeyVal(key, val) );
+        if( arrPrms[i] == "&" || (i+1) == n)
+        {
+                relateKeyVal(strObj, key, val);
+                    if((i+1) == n) relateKeyVal(strObj, key, val + arrPrms[i]);
+                    
+                key = "";
+                val = "";
 
-//             strFLag = "";
-//             console.log(key + " " + val);
-//         }
-//         console.log(arrPrms[i]);
-//         strFLag += arrPrms[i];
-//     }
-//     return strObj;
-// }
+                i = i+1;
+                iC = 0;
+        }
+        (iC == 0) ? key += arrPrms[i] : val += arrPrms[i];
+    }
+    return strObj;
+}
 
-// // Put together key val to the object
-// function relateKeyVal(key, val)
-// {
-//     return eval(key) + ": " + val;
-// }
+// Put together key val to the object
+function relateKeyVal(obj, key, val)
+{
+    obj[key] = val;
+}
 
-// var query = getQueryParams(window.location.href);
-// console.log(query);
+var query = getQueryParams(window.location.href);
+console.log(query);

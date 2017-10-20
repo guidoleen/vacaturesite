@@ -205,19 +205,18 @@ if( isset($_POST['reset_team_img']) )
     <meta http-equiv='cache-control' content='no-cache'>
     <meta http-equiv='expires' content='0'>
     <meta http-equiv='pragma' content='no-cache'>
-
         <link rel="stylesheet" href="<?php echo get_template_directory_uri() . '/css/admin/guidoleen_admin.css' ?>" ></link>
     </head>
         <body>
             <div class="wp-core-ui img-team-container">
-                <div class="img-team-wrapper">
+                <div id="img_team_wrapper" class="img-team-wrapper">
                     <span class="img_team_descr">Jouw Avatar...</span>
                     <p></p>
                     <!-- <div id="cont_team_show">
                         <span class="img_team_descr">Jouw grote foto...</span>
                         <img class="cont_team_show" src="<?php echo $ImgTag ?>">
                     </div> -->
-                    
+
                     <div id="img_team_show" 
                         style="background-image: url( <?php echo $ImgTag ?> ); 
                         width:<?php echo IMG_W ?>; 
@@ -229,31 +228,40 @@ if( isset($_POST['reset_team_img']) )
                     </div>
 
                     <div id="img_team_avatar" class="hide">
+
+                        <div id="tooltip_team" class="tooltip-team">
+                            <span class="shut shut2" onclick="shuttip('tooltip_team');">×</span>
+                            <p>
+                                Drag over de foto om de juiste uitsnede te bepalen.
+                            </p>
+                        </div>
+
+                        <div class="range-value"><span class="range-left">-</span><span class="range-right">+</span></div>
                         <input type="range" id="rngPerc" min="0" max="100" step="1" value="100" />
 
                         <form action="<?php echo 'fnc_team_photo.php?id=' . $Id ?>"  method="post" enctype="multipart/form-data">
-                            <input type="submit" id="savecrop" name="savecrop"  value="Bewaar Avatar" class="button button-primary"/>
-                            <input id="offX" name="offX" type="hidden" value="0" />
-                            <input id="offY" name="offY" type="hidden" value="0" />
+                            <input type="submit" id="savecrop" name="savecrop"  value="Bewaar Avatar" class="button2 button2-primary"/>
+                            <input id="offX" name="offX" type="hidden" value="<?php echo $ImgName[1] ?>" />
+                            <input id="offY" name="offY" type="hidden" value="<?php echo $ImgName[2] ?>" />
                             <input id="imgWidth" name="imgWidth" type="hidden" value="<?php echo $ImgName[3] ?>" />
                             <input id="imgHeigth" name="imgHeigth" type="hidden" value="<?php echo $ImgName[4] ?>" />
                         </form>
 
                         <form action="<?php echo 'fnc_team_photo.php?id=' . $Id ?>"  method="post" enctype="multipart/form-data">
-                            <input type="submit" id="reset_team_img" name="reset_team_img"  value="Reset Avatar" class="button button-primary"/>
+                            <input type="submit" id="reset_team_img" name="reset_team_img"  value="Reset Avatar" class="button2 button2-primary"/>
                         </form>
                     </div>
 
                     <div id="img_team_save">
                         <form action="<?php echo 'fnc_team_photo.php?id=' . $Id ?>"  method="post" enctype="multipart/form-data">
                             <label for="fileteam">
-                                <div class="button button-primary button-xtra" id="fname_span">Upload jouw foto hier...
+                                <div class="button2 button2-primary button2-xtra" id="fname_span">Upload jouw foto hier...
                                     <?php echo $_FILES['fileteam']['name']; ?>
                                 </div>
                             </label>
                             <p></p>
                                 <input type="file" name="fileteam" id="fileteam" class="hidethis" />
-                                <input type="submit" name="subfileteam" id="subfileteam" value="Bewaar foto..." class="button button-primary hide" />
+                                <input type="submit" name="subfileteam" id="subfileteam" value="Bewaar foto..." class="button2 button2-primary hide" />
                         </form>
                     </div>
 

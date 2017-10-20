@@ -49,7 +49,8 @@ function guidoleen_metbox_team($postval)
                         <?php
                             $tfunctn = get_post_meta($postval->ID, 'team_function');
                         ?>
-                    <input type="text" name="team_function" value="<?php echo $tfunctn[0]; ?>" />
+					<input type="text" name="team_function" value="<?php echo $tfunctn[0]; ?>" />
+					<p></p>
                 </td>
             </tr>
             <tr>
@@ -58,17 +59,18 @@ function guidoleen_metbox_team($postval)
                         <?php
                             $temail = get_post_meta($postval->ID, 'team_email');
                         ?>
-                    <input type="text" name="team_email" value="<?php echo $temail[0]; ?>" />
+					<input type="text" name="team_email" value="<?php echo $temail[0]; ?>" />
+					<p></p>
                 </td>
             </tr>
 		</tr><!-- END FISRT ROW -->
-		<tr style="height: 300px;">
+		<tr style="height: 300px; vertical-align: top;">
 			<td>
                 <b>Upload foto team member</b><br>
 				<?php 
 					
 				?>
-					<h2 class="upload-instructions drop-instructions" onclick="openiframe();">Je foto plaatsen....</h2>
+					<h2 onclick="openiframe();" class="button2 button2-primary button2-green show w-auto" style="width: auto;">Je foto plaatsen....</h2>
 			</td>
 		</tr>
 	</table>
@@ -131,7 +133,7 @@ function show_team_posts($arr_)
 		while($i<sizeof($arr_))
 		{
 			?>
-			<div onclick="window.location.href='<?php echo $arr_post_team[$iC]->guid ?>'">
+			<div class="team-membr" onclick="window.location.href='<?php echo $arr_post_team[$iC]->guid ?>'">
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="entry-header">
 					<?php 
@@ -139,7 +141,7 @@ function show_team_posts($arr_)
 					?>
 				</header><!-- .entry-header -->
 
-				<div class="team-membr">
+				<div class="">
 					<?php
 						$arrPhoto = get_post_meta( absint($arr_post_team[$iC]->ID), 'photo_name', true );
 						$arrPhotoShow = "";
