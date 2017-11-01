@@ -133,7 +133,7 @@ function show_team_posts($arr_)
 		while($i<sizeof($arr_))
 		{
 			?>
-			<div class="team-membr" onclick="window.location.href='<?php echo $arr_post_team[$iC]->guid ?>'">
+			<div class="team-membr" idmem=<?php echo $arr_post_team[$iC]->ID ?>> <!-- onclick="window.location.href='<?php echo $arr_post_team[$iC]->guid ?>'" -->
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="entry-header">
 					<?php 

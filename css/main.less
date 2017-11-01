@@ -89,12 +89,14 @@ p
 {
     width: 30%;
 }
-article:hover
+#vacatures article:hover
 {
-    // background: @clr_lgrey;
+    cursor: pointer;
+    background: @clr_ltrgrey;
     opacity: 0.8;
-    padding: 10px;
+    // padding: 10px;
     box-shadow: 0 0 10px @clr_lgrey;
+    border: 30px solid @clr_ltrgrey;
 }
 ul
 {
@@ -846,17 +848,42 @@ footer
 /* TEAM PAGE */
 #content-team
 {
-
+    height: auto;
 }
 .team-membr
 {
+    cursor: pointer;
     width: 33%;
     text-align: center;
-    // float: left;
-    // .box-sha-menu;
+    margin-bottom: 15px;
 }
 .team-photo-frame
 {
     border-radius: 100px;
     .box-sha-menu;
+}
+#team_info_membr
+{
+    overflow: hidden;
+    display: block;
+    top: 100px;
+    left: 0;
+    width: 0px;
+    position: absolute;
+    background: @clr_mgrey;
+    transition: all 0.5s;
+}
+.shut
+{
+    position: absolute;
+    margin-right: -25px;
+    background: @clr-white;
+    cursor: pointer;
+    box-sizing: inherit;
+    font-size: 20px;
+    width: 25px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    text-align: center;
+    right: 25px;
 }
